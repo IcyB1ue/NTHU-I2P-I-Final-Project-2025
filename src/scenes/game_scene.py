@@ -8,6 +8,7 @@ from src.utils import Logger, PositionCamera, GameSettings, Position
 from src.core.services import sound_manager
 from src.sprites import Sprite
 from typing import override
+from src.interface.components.button import Button
 
 class GameScene(Scene):
     game_manager: GameManager
@@ -29,6 +30,15 @@ class GameScene(Scene):
         else:
             self.online_manager = None
         self.sprite_online = Sprite("ingame_ui/options1.png", (GameSettings.TILE_SIZE, GameSettings.TILE_SIZE))
+
+        px, py = GameSettings.SCREEN_WIDTH // 2, GameSettings.SCREEN_HEIGHT * 3 // 4
+        self.bag_button = Button(
+            "UI/button_backpack.png", "UI/button_backpack_hover.png",
+            px + 400, py - 500, 75, 75,
+            lambda: manager.bag.open()
+        )
+
+        
         
         
     @override
@@ -52,6 +62,9 @@ class GameScene(Scene):
             self.game_manager.player.update(dt)
         for enemy in self.game_manager.current_enemy_trainers:
             enemy.update(dt)
+        if not self.game_manager.bag.show:
+
+            self.bag_button.update(dt)
             
         # Update others
         self.game_manager.bag.update(dt)
@@ -85,6 +98,8 @@ class GameScene(Scene):
             enemy.draw(screen, camera)
 
         self.game_manager.bag.draw(screen)
+        if not self.game_manager.bag.show:
+            self.bag_button.draw(screen)
         
         if self.online_manager and self.game_manager.player:
             list_online = self.online_manager.get_list_players()
