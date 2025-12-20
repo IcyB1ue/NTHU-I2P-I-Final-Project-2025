@@ -29,3 +29,14 @@ class SoundManager:
     def stop_all_sounds(self):
         pg.mixer.stop()
         self.current_bgm = None
+
+    def set_master_volume(self, value: float):
+        # Clamp 0.0 – 1.0
+        value = max(0.0, min(1.0, value))
+
+        # Update global game settings
+        GameSettings.AUDIO_VOLUME = value
+
+        # Update currently playing BGM
+        if self.current_bgm:
+            self.current_bgm.set_volume(value)

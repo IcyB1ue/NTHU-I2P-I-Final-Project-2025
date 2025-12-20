@@ -13,6 +13,8 @@ class Map:
     # Rendering Properties
     _surface: pg.Surface
     _collision_map: list[pg.Rect]
+    _bush_map: list[pg.Rect]
+    _water_map: list[pg.Rect]
 
     def __init__(self, path: str, tp: list[Teleport], spawn: Position):
         self.path_name = path
@@ -28,6 +30,8 @@ class Map:
         self._render_all_layers(self._surface)
         # Prebake the collision map
         self._collision_map = self._create_collision_map()
+        self._bush_map = self._create_bush_map()
+        self._water_map = self._create_water_map()
 
     def update(self, dt: float):
         return
@@ -39,6 +43,11 @@ class Map:
         if GameSettings.DRAW_HITBOXES:
             for rect in self._collision_map:
                 pg.draw.rect(screen, (255, 0, 0), camera.transform_rect(rect), 1)
+            for rect in self._bush_map:
+                pg.draw.rect(screen, (0, 255, 0), camera.transform_rect(rect), 1)
+            for rect in self._water_map:
+                pg.draw.rect(screen, (0, 0, 255), camera.transform_rect(rect), 1)
+
         
     def check_collision(self, rect: pg.Rect) -> bool:
         '''
@@ -48,7 +57,13 @@ class Map:
         '''
         for rectangle in self._collision_map:
             if rect.colliderect(rectangle):
-                # print("True")
+                return True
+        return False
+    
+    def check_water_collision(self, rect: pg.Rect) -> bool:
+        """Check if rect collides with water tiles."""
+        for water_rect in self._water_map:
+            if rect.colliderect(water_rect):
                 return True
         return False
         
@@ -58,7 +73,7 @@ class Map:
         Hint: Maybe there is an way to switch the map using something from src/core/managers/game_manager.py called switch_... 
         '''
         for tp in self.teleporters:
-            if pos.x // GameSettings.TILE_SIZE == tp.pos.x // GameSettings.TILE_SIZE and pos.y // GameSettings.TILE_SIZE == tp.pos.y // GameSettings.TILE_SIZE:
+            if pos.x // GameSettings.TILE_SIZE == tp.pos.x // GameSettings.TILE_SIZE and (pos.y-1) // GameSettings.TILE_SIZE == tp.pos.y // GameSettings.TILE_SIZE:
                 return tp
             
         return None
@@ -83,8 +98,8 @@ class Map:
     
     def _create_collision_map(self) -> list[pg.Rect]:
         rects = []
-        for layer in self.tmxdata.visible_layers:
-            if isinstance(layer, pytmx.TiledTileLayer) and ("collision" in layer.name.lower() or "house" in layer.name.lower()):
+        for layer in self.tmxdata.layers:
+            if isinstance(layer, pytmx.TiledTileLayer) and ("collision" in layer.name.lower() or "house" in layer.name.lower() or "border" in layer.name.lower()):
                 for x, y, gid in layer:
                     if gid != 0:
                         '''
@@ -93,6 +108,25 @@ class Map:
                         Append the collision rectangle to the rects[] array
                         Remember scale the rectangle with the TILE_SIZE from settings
                         '''
+                        rects.append(pg.Rect(x * GameSettings.TILE_SIZE, y * GameSettings.TILE_SIZE, GameSettings.TILE_SIZE, GameSettings.TILE_SIZE))
+        return rects
+    
+    def _create_bush_map(self) -> list[pg.Rect]:
+        rects = []
+        for layer in self.tmxdata.visible_layers:
+            if isinstance(layer, pytmx.TiledTileLayer) and ("pokemonbush" in layer.name.lower()):
+                for x, y, gid in layer:
+                    if gid != 0:
+                        rects.append(pg.Rect(x * GameSettings.TILE_SIZE, y * GameSettings.TILE_SIZE, GameSettings.TILE_SIZE, GameSettings.TILE_SIZE))
+        return rects
+    
+    def _create_water_map(self) -> list[pg.Rect]:
+        """Create water tile collision map."""
+        rects = []
+        for layer in self.tmxdata.layers:
+            if isinstance(layer, pytmx.TiledTileLayer) and ("water" in layer.name.lower() or "pond" in layer.name.lower() or "lake" in layer.name.lower() or "sea" in layer.name.lower()):
+                for x, y, gid in layer:
+                    if gid != 0:
                         rects.append(pg.Rect(x * GameSettings.TILE_SIZE, y * GameSettings.TILE_SIZE, GameSettings.TILE_SIZE, GameSettings.TILE_SIZE))
         return rects
 
@@ -111,3 +145,61 @@ class Map:
                 "y": self.spawn.y // GameSettings.TILE_SIZE,
             }
         }
+
+class Minimap:
+    def __init__(self, world_width, world_height, map_surface, size=350, position=None):
+        self.size = size
+        self.world_width = world_width
+        self.world_height = world_height
+        self.scale_x = size / world_width
+        self.scale_y = size / world_height
+        
+        # Create a surface for the minimap
+        self.surface = pg.Surface((self.size, self.size), pg.SRCALPHA)
+        
+        # Scale down the entire map to fit the minimap
+        self.map_thumbnail = pg.transform.smoothscale(map_surface, (self.size, self.size))
+        
+        # Allow custom positioning, default to top-left
+        if position is None:
+            position = (20, 20)
+        self.rect = self.surface.get_rect(topleft=position)
+
+    def draw(self, screen, player_pos, entities=None):
+        # 1. Draw the scaled-down map as background
+        self.surface.blit(self.map_thumbnail, (0, 0))
+        
+        # 2. Add a semi-transparent dark overlay for better visibility
+        dark_overlay = pg.Surface((self.size, self.size), pg.SRCALPHA)
+        dark_overlay.fill((0, 0, 0, 80))  # Slight darkening for contrast
+        self.surface.blit(dark_overlay, (0, 0))
+        
+        # 3. Draw entities (enemies, online players, etc.)
+        if entities:
+            for entity in entities:
+                # Calculate scaled position with bounds checking
+                ent_x = max(0, min(self.size - 1, entity.pos.x * self.scale_x))
+                ent_y = max(0, min(self.size - 1, entity.pos.y * self.scale_y))
+                
+                # Use entity color if available, otherwise default to red
+                color = getattr(entity, 'color', (255, 0, 0))
+                # Draw outer glow
+                pg.draw.circle(self.surface, (*color[:3], 100), (int(ent_x), int(ent_y)), 4)
+                # Draw inner dot
+                pg.draw.circle(self.surface, color, (int(ent_x), int(ent_y)), 2)
+        
+        # 4. Draw Player Indication (on top of entities)
+        # Calculate scaled position with bounds checking
+        mini_x = max(0, min(self.size - 1, player_pos.x * self.scale_x))
+        mini_y = max(0, min(self.size - 1, player_pos.y * self.scale_y))
+        
+        # Draw a glowing dot for the player with better visibility
+        pg.draw.circle(self.surface, (100, 255, 100), (int(mini_x), int(mini_y)), 5)  # Outer glow
+        pg.draw.circle(self.surface, (0, 255, 0), (int(mini_x), int(mini_y)), 3)      # Middle
+        pg.draw.circle(self.surface, (200, 255, 200), (int(mini_x), int(mini_y)), 1)  # Center highlight
+        
+        # 5. Draw to main screen
+        screen.blit(self.surface, self.rect)
+        
+        # 6. Draw border
+        pg.draw.rect(screen, (255, 255, 255), self.rect, 2)

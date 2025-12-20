@@ -61,4 +61,3 @@ class Entity:
         x = float(data["x"])
         y = float(data["y"])
         return cls(x * GameSettings.TILE_SIZE, y * GameSettings.TILE_SIZE, game_manager)
-        

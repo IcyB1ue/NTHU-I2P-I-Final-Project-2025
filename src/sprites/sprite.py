@@ -30,3 +30,17 @@ class Sprite:
         
     def update_pos(self, pos: Position):
         self.rect.topleft = (round(pos.x), round(pos.y))
+
+class Text:
+    def __init__(self, text, size, color):
+        self.text = text
+        self.color = color
+        self.font = resource_manager.get_font("Minecraft.ttf", size)
+        self.text = self.font.render(text, True, color)
+        self.rect = self.text.get_rect()
+
+    def draw(self, screen: pg.Surface):
+        screen.blit(self.text, self.rect)
+        
+
+        

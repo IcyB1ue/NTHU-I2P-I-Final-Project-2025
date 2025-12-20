@@ -1,0 +1,202 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "hospital.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cat.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 1.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 2.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 3.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 4.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 5.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 6.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Dog.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Map.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/tileset.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/music/Downloads/home.tmx": {
+            "scale": 1.805,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 160.11080332409972,
+                "y": 160.11080332409972
+            }
+        },
+        "Cat.tsx": {
+            "scaleInDock": 1
+        },
+        "Cozy Interior 1.tsx": {
+            "scaleInDock": 1
+        },
+        "Cozy Interior 2.tsx": {
+            "scaleInDock": 1
+        },
+        "Cozy Interior 3.tsx": {
+            "scaleInDock": 1
+        },
+        "Cozy Interior 4.tsx": {
+            "scaleInDock": 1
+        },
+        "Cozy Interior 5.tsx": {
+            "scaleInDock": 1
+        },
+        "Cozy Interior 6.tsx": {
+            "scaleInDock": 1
+        },
+        "Dog.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "gym.tmx": {
+            "scale": 0.722,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 200.13850415512465,
+                "y": 119.11357340720218
+            }
+        },
+        "home.tmx": {
+            "scale": 2.648125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 150.29502006136417,
+                "y": 158.22515931083313
+            }
+        },
+        "hospital.tmx": {
+            "scale": 4,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 87.75,
+                "y": 72
+            }
+        },
+        "hospital_reception.tmx": {
+            "scale": 5.884722222222222,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 87.85461411375974,
+                "y": 72.05097946660374
+            }
+        },
+        "map.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 706.6666666666665,
+                "y": 288
+            }
+        },
+        "shop.tmx": {
+            "scale": 2,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 108,
+                "y": 168.5
+            }
+        },
+        "tileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "water_gym.tmx": {
+            "scale": 1,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 143,
+                "y": 407
+            }
+        },
+        "water_map.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 505.3333333333333,
+                "y": 567.3333333333333
+            }
+        }
+    },
+    "last.imagePath": "C:/Users/music/Downloads",
+    "map.height": 9,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 9,
+    "openFiles": [
+        "gym.tmx",
+        "map.tmx",
+        "tileset.tsx",
+        "shop.tmx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 1.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 2.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 3.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 4.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 5.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 6.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Map.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cat.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Dog.tsx",
+        "home.tmx",
+        "water_map.tmx",
+        "hospital.tmx",
+        "water_gym.tmx"
+    ],
+    "project": "new_map.tiled-project",
+    "recentFiles": [
+        "gym.tmx",
+        "map.tmx",
+        "tileset.tsx",
+        "shop.tmx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 1.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 2.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 3.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 4.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 5.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cozy Interior 6.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Map.tsx",
+        "C:/Users/music/Downloads/Top-Down_Retro_Interior/Cat.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 512,
+        "width": 344
+    },
+    "tileset.type": 0
+}

@@ -6,12 +6,16 @@ from .services import scene_manager, input_manager
 from src.scenes.menu_scene import MenuScene
 from src.scenes.game_scene import GameScene
 from src.scenes.setting_scene import SettingScene
+from src.scenes.battle_scene import BattleScene
+from src.scenes.wild_pokemon_scene import WildPokemonScene
+from src.scenes.intro_scene import IntroScene
+
 
 class Engine:
 
-    screen: pg.Surface              # Screen Display of the Game
-    clock: pg.time.Clock            # Clock for FPS control
-    running: bool                   # Running state of the game
+    screen: pg.Surface
+    clock: pg.time.Clock
+    running: bool
 
     def __init__(self):
         Logger.info("Initializing Engine")
@@ -25,12 +29,12 @@ class Engine:
         pg.display.set_caption(GameSettings.TITLE)
 
         scene_manager.register_scene("menu", MenuScene())
+        scene_manager.register_scene("intro", IntroScene())
         scene_manager.register_scene("game", GameScene())
-        scene_manager.register_scene("settings", SettingScene()) # Changed here
-        '''
-        [TODO HACKATHON 5]
-        Register the setting scene here
-        '''
+        scene_manager.register_scene("settings", SettingScene())
+        scene_manager.register_scene("battle", BattleScene())
+        scene_manager.register_scene("wild_pokemon", WildPokemonScene())
+        
         scene_manager.change_scene("menu")
 
     def run(self):
@@ -48,11 +52,16 @@ class Engine:
             if event.type == pg.QUIT:
                 self.running = False
             input_manager.handle_events(event)
+            
+            # Pass events to current scene for text input handling
+            current_scene = scene_manager.get_current_scene()
+            if current_scene and hasattr(current_scene, 'handle_event'):
+                current_scene.handle_event(event)
 
     def update(self, dt: float):
         scene_manager.update(dt)
 
     def render(self):
-        self.screen.fill((0, 0, 0))     # Make sure the display is cleared
-        scene_manager.draw(self.screen) # Draw the current scene
-        pg.display.flip()               # Render the display
+        self.screen.fill((0, 0, 0))
+        scene_manager.draw(self.screen)
+        pg.display.flip()

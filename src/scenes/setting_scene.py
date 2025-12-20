@@ -10,6 +10,7 @@ from src.scenes.scene import Scene
 from src.interface.components import Button
 from src.core.services import scene_manager, sound_manager, input_manager
 from typing import override
+from src.scenes.game_scene import Settings
 
 class SettingScene(Scene):
     # Background Image
@@ -38,3 +39,4 @@ class SettingScene(Scene):
         self.back_button.draw(screen)
 
         # Initiate, Update, Draw !!!!!!!!!!!!!!!!!!!!!!!!
+
