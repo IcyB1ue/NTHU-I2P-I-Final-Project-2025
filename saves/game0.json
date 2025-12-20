@@ -1,716 +1,724 @@
 {
-    "map": [
+  "map": [
+    {
+      "path": "map.tmx",
+      "teleport": [
         {
-            "path": "map.tmx",
-            "teleport": [
-                {
-                    "x": 24,
-                    "y": 22,
-                    "destination": {
-                        "path": "gym.tmx",
-                        "x": 12,
-                        "y": 12
-                    }
-                },
-                {
-                    "x": 54,
-                    "y": 13,
-                    "destination": {
-                        "path": "shop.tmx",
-                        "x": 2,
-                        "y": 10
-                    }
-                },
-                {
-                    "x": 16,
-                    "y": 27,
-                    "destination": {
-                        "path": "home.tmx",
-                        "x": 10,
-                        "y": 17
-                    }
-                }
-            ],
-            "player": {
-                "x": 16,
-                "y": 30
-            },
-            "enemy_trainers": [
-                {
-                    "x": 24.0,
-                    "y": 29.0,
-                    "classification": "stationary",
-                    "facing": "DOWN",
-                    "max_tiles": 2,
-                    "monsters": {
-                        "name": "Rattata",
-                        "max_hp": 30,
-                        "level": 5,
-                        "sprite_path": "menu_sprites/rattata.png",
-                        "attack": 8,
-                        "defense": 5,
-                        "hp": 30,
-                        "element": "Normal",
-                        "moves": [
-                            {
-                                "name": "Tackle",
-                                "type": "Normal",
-                                "power": 40,
-                                "accuracy": 100,
-                                "pp": 35,
-                                "max_pp": 35,
-                                "category": "physical"
-                            },
-                            {
-                                "name": "Quick Attack",
-                                "type": "Normal",
-                                "power": 40,
-                                "accuracy": 100,
-                                "pp": 30,
-                                "max_pp": 30,
-                                "category": "physical"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "x": 54.0,
-                    "y": 16.0,
-                    "classification": "stationary",
-                    "facing": "UP",
-                    "max_tiles": 2,
-                    "monsters": {
-                        "name": "Dragonite",
-                        "max_hp": 220,
-                        "level": 40,
-                        "sprite_path": "menu_sprites/dragonite.png",
-                        "attack": 30,
-                        "defense": 20,
-                        "hp": 220,
-                        "element": "Dragon",
-                        "moves": [
-                            {
-                                "name": "Outrage",
-                                "type": "Dragon",
-                                "power": 120,
-                                "accuracy": 100,
-                                "pp": 10,
-                                "max_pp": 10,
-                                "category": "physical"
-                            },
-                            {
-                                "name": "Draco Meteor",
-                                "type": "Dragon",
-                                "power": 130,
-                                "accuracy": 90,
-                                "pp": 5,
-                                "max_pp": 5,
-                                "category": "special"
-                            },
-                            {
-                                "name": "Hurricane",
-                                "type": "Flying",
-                                "power": 110,
-                                "accuracy": 70,
-                                "pp": 10,
-                                "max_pp": 10,
-                                "category": "special"
-                            },
-                            {
-                                "name": "Fire Punch",
-                                "type": "Fire",
-                                "power": 75,
-                                "accuracy": 100,
-                                "pp": 15,
-                                "max_pp": 15,
-                                "category": "physical"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "x": 31.0,
-                    "y": 31.0,
-                    "classification": "stationary",
-                    "facing": "UP",
-                    "max_tiles": 2,
-                    "monsters": {
-                        "name": "Venusaur",
-                        "max_hp": 160,
-                        "level": 30,
-                        "sprite_path": "menu_sprites/venusaur.png",
-                        "attack": 25,
-                        "defense": 25,
-                        "hp": 160,
-                        "element": "Grass",
-                        "moves": [
-                            {
-                                "name": "Solar Beam",
-                                "type": "Grass",
-                                "power": 120,
-                                "accuracy": 100,
-                                "pp": 10,
-                                "max_pp": 10,
-                                "category": "special"
-                            },
-                            {
-                                "name": "Leaf Storm",
-                                "type": "Grass",
-                                "power": 130,
-                                "accuracy": 90,
-                                "pp": 5,
-                                "max_pp": 5,
-                                "category": "special"
-                            },
-                            {
-                                "name": "Sludge Bomb",
-                                "type": "Poison",
-                                "power": 90,
-                                "accuracy": 100,
-                                "pp": 10,
-                                "max_pp": 10,
-                                "category": "special"
-                            },
-                            {
-                                "name": "Earthquake",
-                                "type": "Ground",
-                                "power": 100,
-                                "accuracy": 100,
-                                "pp": 10,
-                                "max_pp": 10,
-                                "category": "physical"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "shops": []
-        },
-        {
+          "x": 24,
+          "y": 22,
+          "destination": {
             "path": "gym.tmx",
-            "teleport": [
-                {
-                    "x": 11,
-                    "y": 14,
-                    "destination": {
-                        "path": "map.tmx",
-                        "x": 24,
-                        "y": 23
-                    }
-                },
-                {
-                    "x": 12,
-                    "y": 14,
-                    "destination": {
-                        "path": "map.tmx",
-                        "x": 24,
-                        "y": 23
-                    }
-                },
-                {
-                    "x": 13,
-                    "y": 14,
-                    "destination": {
-                        "path": "map.tmx",
-                        "x": 24,
-                        "y": 23
-                    }
-                }
-            ],
-            "player": {
-                "x": 12,
-                "y": 12
-            },
-            "enemy_trainers": [
-                {
-                    "x": 12.0,
-                    "y": 5.0,
-                    "classification": "stationary",
-                    "facing": "DOWN",
-                    "max_tiles": 3,
-                    "is_gym_leader": true,
-                    "gym_type": "Fire",
-                    "monsters": {
-                        "name": "Charizard",
-                        "max_hp": 200,
-                        "level": 35,
-                        "sprite_path": "menu_sprites/charizard.png",
-                        "attack": 40,
-                        "defense": 30,
-                        "hp": 200,
-                        "element": "Fire",
-                        "moves": [
-                            {
-                                "name": "Flamethrower",
-                                "type": "Fire",
-                                "power": 90,
-                                "accuracy": 100,
-                                "pp": 15,
-                                "max_pp": 15,
-                                "category": "special"
-                            },
-                            {
-                                "name": "Fire Blast",
-                                "type": "Fire",
-                                "power": 110,
-                                "accuracy": 85,
-                                "pp": 5,
-                                "max_pp": 5,
-                                "category": "special"
-                            },
-                            {
-                                "name": "Dragon Claw",
-                                "type": "Dragon",
-                                "power": 80,
-                                "accuracy": 100,
-                                "pp": 15,
-                                "max_pp": 15,
-                                "category": "physical"
-                            },
-                            {
-                                "name": "Air Slash",
-                                "type": "Flying",
-                                "power": 75,
-                                "accuracy": 95,
-                                "pp": 15,
-                                "max_pp": 15,
-                                "category": "special"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "shops": []
+            "x": 12,
+            "y": 12
+          }
         },
         {
+          "x": 54,
+          "y": 13,
+          "destination": {
             "path": "shop.tmx",
-            "teleport": [
-                {
-                    "x": 2,
-                    "y": 5,
-                    "destination": {
-                        "path": "map.tmx",
-                        "x": 54,
-                        "y": 15
-                    }
-                }
-            ],
-            "player": {
-                "x": 54,
-                "y": 15
-            },
-            "enemy_trainers": [],
-            "shops": [
-                {
-                    "x": 11.0,
-                    "y": 10.0,
-                    "name": "P'Anan's Shop",
-                    "sprite_path": "shopkeeper/p_anan_da_baew.png",
-                    "sprite_scale": 2.0,
-                    "inventory": [
-                        {
-                            "name": "Potion",
-                            "price": 10,
-                            "sprite_path": "ingame_ui/potion.png",
-                            "description": "Restores 50 HP",
-                            "stock": null
-                        },
-                        {
-                            "name": "Super Potion",
-                            "price": 30,
-                            "sprite_path": "ingame_ui/potion.png",
-                            "description": "Restores 100 HP",
-                            "stock": null
-                        },
-                        {
-                            "name": "Strength Potion",
-                            "price": 50,
-                            "sprite_path": "ingame_ui/potion.png",
-                            "description": "+10 Attack in battle",
-                            "stock": null
-                        },
-                        {
-                            "name": "Defense Potion",
-                            "price": 50,
-                            "sprite_path": "ingame_ui/potion.png",
-                            "description": "+10 Defense in battle",
-                            "stock": null
-                        },
-                        {
-                            "name": "Pokeball",
-                            "price": 20,
-                            "sprite_path": "ingame_ui/ball.png",
-                            "description": "Catch wild monsters",
-                            "stock": null
-                        }
-                    ]
-                }
-            ]
+            "x": 2,
+            "y": 10
+          }
         },
         {
+          "x": 16,
+          "y": 27,
+          "destination": {
             "path": "home.tmx",
-            "teleport": [
-                {
-                    "x": 9,
-                    "y": 18,
-                    "destination": {
-                        "path": "map.tmx",
-                        "x": 16,
-                        "y": 28
-                    }
-                },
-                {
-                    "x": 10,
-                    "y": 18,
-                    "destination": {
-                        "path": "map.tmx",
-                        "x": 16,
-                        "y": 28
-                    }
-                },
-                {
-                    "x": 11,
-                    "y": 18,
-                    "destination": {
-                        "path": "map.tmx",
-                        "x": 16,
-                        "y": 28
-                    }
-                }
-            ],
-            "player": {
-                "x": 9,
-                "y": 7
-            },
-            "enemy_trainers": [],
-            "shops": []
-        },
-        {
-            "path": "water_map.tmx",
-            "teleport": [
-                {
-                    "x": 41,
-                    "y": 29,
-                    "destination": {
-                        "path": "water_gym.tmx",
-                        "x": 13,
-                        "y": 48
-                    }
-                },
-                {
-                    "x": 22,
-                    "y": 17,
-                    "destination": {
-                        "path": "hospital.tmx",
-                        "x": 10,
-                        "y": 15
-                    }
-                },
-                {
-                    "x": 23,
-                    "y": 17,
-                    "destination": {
-                        "path": "hospital.tmx",
-                        "x": 10,
-                        "y": 15
-                    }
-                }
-            ],
-            "player": {
-                "x": 0,
-                "y": 19
-            },
-            "enemy_trainers": [],
-            "shops": []
-        },
-        {
-            "path": "water_gym.tmx",
-            "teleport": [
-                {
-                    "x": 11,
-                    "y": 50,
-                    "destination": {
-                        "path": "water_map.tmx",
-                        "x": 41,
-                        "y": 30
-                    }
-                },
-                {
-                    "x": 12,
-                    "y": 50,
-                    "destination": {
-                        "path": "water_map.tmx",
-                        "x": 41,
-                        "y": 30
-                    }
-                },
-                {
-                    "x": 13,
-                    "y": 50,
-                    "destination": {
-                        "path": "water_map.tmx",
-                        "x": 41,
-                        "y": 30
-                    }
-                },
-                {
-                    "x": 14,
-                    "y": 50,
-                    "destination": {
-                        "path": "water_map.tmx",
-                        "x": 41,
-                        "y": 30
-                    }
-                },
-                {
-                    "x": 15,
-                    "y": 50,
-                    "destination": {
-                        "path": "water_map.tmx",
-                        "x": 41,
-                        "y": 30
-                    }
-                }
-            ],
-            "player": {
-                "x": 13,
-                "y": 48
-            },
-            "enemy_trainers": [
-                {
-                    "x": 3.0,
-                    "y": 49.0,
-                    "classification": "stationary",
-                    "facing": "LEFT",
-                    "max_tiles": 2,
-                    "is_gym_leader": false,
-                    "is_corrupted": true,
-                    "monsters": {
-                        "name": "Blastoise",
-                        "max_hp": 250,
-                        "level": 40,
-                        "sprite_path": "menu_sprites/blastoise.png",
-                        "attack": 45,
-                        "defense": 50,
-                        "hp": 250,
-                        "element": "Water",
-                        "moves": [
-                            {
-                                "name": "Hydro Pump",
-                                "type": "Water",
-                                "power": 110,
-                                "accuracy": 80,
-                                "pp": 5,
-                                "max_pp": 5,
-                                "category": "special"
-                            },
-                            {
-                                "name": "Ice Beam",
-                                "type": "Ice",
-                                "power": 90,
-                                "accuracy": 100,
-                                "pp": 10,
-                                "max_pp": 10,
-                                "category": "special"
-                            },
-                            {
-                                "name": "Skull Bash",
-                                "type": "Normal",
-                                "power": 130,
-                                "accuracy": 100,
-                                "pp": 10,
-                                "max_pp": 10,
-                                "category": "physical"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "x": 1.0,
-                    "y": 4.0,
-                    "classification": "stationary",
-                    "facing": "RIGHT",
-                    "max_tiles": 0,
-                    "is_gym_leader": true,
-                    "gym_type": "Water",
-                    "trainer_name": "Misty",
-                    "monsters": {
-                        "name": "Starmie",
-                        "max_hp": 200,
-                        "level": 42,
-                        "sprite_path": "menu_sprites/starmie.png",
-                        "attack": 40,
-                        "defense": 45,
-                        "hp": 200,
-                        "element": "Water",
-                        "moves": [
-                            {
-                                "name": "Hydro Pump",
-                                "type": "Water",
-                                "power": 110,
-                                "accuracy": 80,
-                                "pp": 5,
-                                "max_pp": 5,
-                                "category": "special"
-                            },
-                            {
-                                "name": "Psychic",
-                                "type": "Psychic",
-                                "power": 90,
-                                "accuracy": 100,
-                                "pp": 10,
-                                "max_pp": 10,
-                                "category": "special"
-                            },
-                            {
-                                "name": "Ice Beam",
-                                "type": "Ice",
-                                "power": 90,
-                                "accuracy": 100,
-                                "pp": 10,
-                                "max_pp": 10,
-                                "category": "special"
-                            },
-                            {
-                                "name": "Recover",
-                                "type": "Normal",
-                                "power": 0,
-                                "accuracy": 100,
-                                "pp": 10,
-                                "max_pp": 10,
-                                "category": "status"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "shops": []
-        },
-        {
-            "path": "hospital.tmx",
-            "teleport": [
-                {
-                    "x": 9,
-                    "y": 16,
-                    "destination": {
-                        "path": "water_map.tmx",
-                        "x": 22,
-                        "y": 18
-                    }
-                },
-                {
-                    "x": 10,
-                    "y": 16,
-                    "destination": {
-                        "path": "water_map.tmx",
-                        "x": 23,
-                        "y": 18
-                    }
-                },
-                {
-                    "x": 10,
-                    "y": 16,
-                    "destination": {
-                        "path": "water_map.tmx",
-                        "x": 40,
-                        "y": 20
-                    }
-                },
-                {
-                    "x": 11,
-                    "y": 16,
-                    "destination": {
-                        "path": "water_map.tmx",
-                        "x": 40,
-                        "y": 20
-                    }
-                }
-            ],
-            "player": {
-                "x": 10,
-                "y": 15
-            },
-            "enemy_trainers": [],
-            "shops": []
+            "x": 10,
+            "y": 17
+          }
         }
-    ],
-    "current_map": "home.tmx",
-    "player": {
+      ],
+      "player": {
+        "x": 16,
+        "y": 30
+      },
+      "enemy_trainers": [
+        {
+          "x": 24.0,
+          "y": 29.0,
+          "classification": "stationary",
+          "facing": "DOWN",
+          "max_tiles": 2,
+          "monsters": {
+            "name": "Rattata",
+            "max_hp": 30,
+            "level": 5,
+            "sprite_path": "menu_sprites/rattata.png",
+            "attack": 8,
+            "defense": 5,
+            "hp": 30,
+            "element": "Normal",
+            "moves": [
+              {
+                "name": "Tackle",
+                "type": "Normal",
+                "power": 40,
+                "accuracy": 100,
+                "pp": 35,
+                "max_pp": 35,
+                "category": "physical"
+              },
+              {
+                "name": "Quick Attack",
+                "type": "Normal",
+                "power": 40,
+                "accuracy": 100,
+                "pp": 30,
+                "max_pp": 30,
+                "category": "physical"
+              }
+            ]
+          },
+          "is_corrupted": false,
+          "is_gym_leader": false
+        },
+        {
+          "x": 54.0,
+          "y": 16.0,
+          "classification": "stationary",
+          "facing": "UP",
+          "max_tiles": 2,
+          "monsters": {
+            "name": "Dragonite",
+            "max_hp": 220,
+            "level": 40,
+            "sprite_path": "menu_sprites/dragonite.png",
+            "attack": 30,
+            "defense": 20,
+            "hp": 220,
+            "element": "Dragon",
+            "moves": [
+              {
+                "name": "Outrage",
+                "type": "Dragon",
+                "power": 120,
+                "accuracy": 100,
+                "pp": 10,
+                "max_pp": 10,
+                "category": "physical"
+              },
+              {
+                "name": "Draco Meteor",
+                "type": "Dragon",
+                "power": 130,
+                "accuracy": 90,
+                "pp": 5,
+                "max_pp": 5,
+                "category": "special"
+              },
+              {
+                "name": "Hurricane",
+                "type": "Flying",
+                "power": 110,
+                "accuracy": 70,
+                "pp": 10,
+                "max_pp": 10,
+                "category": "special"
+              },
+              {
+                "name": "Fire Punch",
+                "type": "Fire",
+                "power": 75,
+                "accuracy": 100,
+                "pp": 15,
+                "max_pp": 15,
+                "category": "physical"
+              }
+            ]
+          },
+          "is_corrupted": false,
+          "is_gym_leader": false
+        },
+        {
+          "x": 31.0,
+          "y": 31.0,
+          "classification": "stationary",
+          "facing": "UP",
+          "max_tiles": 2,
+          "monsters": {
+            "name": "Venusaur",
+            "max_hp": 160,
+            "level": 30,
+            "sprite_path": "menu_sprites/venusaur.png",
+            "attack": 25,
+            "defense": 25,
+            "hp": 160,
+            "element": "Grass",
+            "moves": [
+              {
+                "name": "Solar Beam",
+                "type": "Grass",
+                "power": 120,
+                "accuracy": 100,
+                "pp": 10,
+                "max_pp": 10,
+                "category": "special"
+              },
+              {
+                "name": "Leaf Storm",
+                "type": "Grass",
+                "power": 130,
+                "accuracy": 90,
+                "pp": 5,
+                "max_pp": 5,
+                "category": "special"
+              },
+              {
+                "name": "Sludge Bomb",
+                "type": "Poison",
+                "power": 90,
+                "accuracy": 100,
+                "pp": 10,
+                "max_pp": 10,
+                "category": "special"
+              },
+              {
+                "name": "Earthquake",
+                "type": "Ground",
+                "power": 100,
+                "accuracy": 100,
+                "pp": 10,
+                "max_pp": 10,
+                "category": "physical"
+              }
+            ]
+          },
+          "is_corrupted": false,
+          "is_gym_leader": false
+        }
+      ],
+      "shops": []
+    },
+    {
+      "path": "gym.tmx",
+      "teleport": [
+        {
+          "x": 11,
+          "y": 14,
+          "destination": {
+            "path": "map.tmx",
+            "x": 24,
+            "y": 23
+          }
+        },
+        {
+          "x": 12,
+          "y": 14,
+          "destination": {
+            "path": "map.tmx",
+            "x": 24,
+            "y": 23
+          }
+        },
+        {
+          "x": 13,
+          "y": 14,
+          "destination": {
+            "path": "map.tmx",
+            "x": 24,
+            "y": 23
+          }
+        }
+      ],
+      "player": {
+        "x": 12,
+        "y": 12
+      },
+      "enemy_trainers": [
+        {
+          "x": 12.0,
+          "y": 5.0,
+          "classification": "stationary",
+          "facing": "DOWN",
+          "max_tiles": 3,
+          "monsters": {
+            "name": "Charizard",
+            "max_hp": 200,
+            "level": 35,
+            "sprite_path": "menu_sprites/charizard.png",
+            "attack": 40,
+            "defense": 30,
+            "hp": 200,
+            "element": "Fire",
+            "moves": [
+              {
+                "name": "Flamethrower",
+                "type": "Fire",
+                "power": 90,
+                "accuracy": 100,
+                "pp": 15,
+                "max_pp": 15,
+                "category": "special"
+              },
+              {
+                "name": "Fire Blast",
+                "type": "Fire",
+                "power": 110,
+                "accuracy": 85,
+                "pp": 5,
+                "max_pp": 5,
+                "category": "special"
+              },
+              {
+                "name": "Dragon Claw",
+                "type": "Dragon",
+                "power": 80,
+                "accuracy": 100,
+                "pp": 15,
+                "max_pp": 15,
+                "category": "physical"
+              },
+              {
+                "name": "Air Slash",
+                "type": "Flying",
+                "power": 75,
+                "accuracy": 95,
+                "pp": 15,
+                "max_pp": 15,
+                "category": "special"
+              }
+            ]
+          },
+          "is_corrupted": false,
+          "is_gym_leader": true
+        }
+      ],
+      "shops": []
+    },
+    {
+      "path": "shop.tmx",
+      "teleport": [
+        {
+          "x": 2,
+          "y": 5,
+          "destination": {
+            "path": "map.tmx",
+            "x": 54,
+            "y": 15
+          }
+        }
+      ],
+      "player": {
+        "x": 54,
+        "y": 15
+      },
+      "enemy_trainers": [],
+      "shops": [
+        {
+          "x": 11.0,
+          "y": 10.0,
+          "name": "P'Anan's Shop",
+          "sprite_path": "shopkeeper/p_anan_da_baew.png",
+          "sprite_scale": 2.0,
+          "inventory": [
+            {
+              "name": "Potion",
+              "price": 10,
+              "sprite_path": "ingame_ui/potion.png",
+              "description": "Restores 50 HP",
+              "stock": null
+            },
+            {
+              "name": "Super Potion",
+              "price": 30,
+              "sprite_path": "ingame_ui/potion.png",
+              "description": "Restores 100 HP",
+              "stock": null
+            },
+            {
+              "name": "Strength Potion",
+              "price": 50,
+              "sprite_path": "ingame_ui/potion.png",
+              "description": "+10 Attack in battle",
+              "stock": null
+            },
+            {
+              "name": "Defense Potion",
+              "price": 50,
+              "sprite_path": "ingame_ui/potion.png",
+              "description": "+10 Defense in battle",
+              "stock": null
+            },
+            {
+              "name": "Pokeball",
+              "price": 20,
+              "sprite_path": "ingame_ui/ball.png",
+              "description": "Catch wild monsters",
+              "stock": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "home.tmx",
+      "teleport": [
+        {
+          "x": 9,
+          "y": 18,
+          "destination": {
+            "path": "map.tmx",
+            "x": 16,
+            "y": 28
+          }
+        },
+        {
+          "x": 10,
+          "y": 18,
+          "destination": {
+            "path": "map.tmx",
+            "x": 16,
+            "y": 28
+          }
+        },
+        {
+          "x": 11,
+          "y": 18,
+          "destination": {
+            "path": "map.tmx",
+            "x": 16,
+            "y": 28
+          }
+        }
+      ],
+      "player": {
         "x": 9,
         "y": 7
+      },
+      "enemy_trainers": [],
+      "shops": []
     },
-    "bag": {
-        "monsters": [
-            {
-                "name": "Blastoise",
-                "max_hp": 300,
-                "level": 50,
-                "sprite_path": "menu_sprites/blastoise.png",
-                "attack": 20,
-                "defense": 50,
-                "hp": 15,
-                "element": "Water",
-                "moves": [
-                    {
-                        "name": "Hydro Pump",
-                        "type": "Water",
-                        "power": 110,
-                        "accuracy": 80,
-                        "pp": 5,
-                        "max_pp": 5,
-                        "category": "special"
-                    },
-                    {
-                        "name": "Surf",
-                        "type": "Water",
-                        "power": 90,
-                        "accuracy": 100,
-                        "pp": 15,
-                        "max_pp": 15,
-                        "category": "special"
-                    },
-                    {
-                        "name": "Ice Beam",
-                        "type": "Ice",
-                        "power": 90,
-                        "accuracy": 100,
-                        "pp": 10,
-                        "max_pp": 10,
-                        "category": "special"
-                    },
-                    {
-                        "name": "Skull Bash",
-                        "type": "Normal",
-                        "power": 130,
-                        "accuracy": 100,
-                        "pp": 10,
-                        "max_pp": 10,
-                        "category": "physical"
-                    }
-                ]
-            }
-        ],
-        "items": [
-            {
-                "name": "Potion",
-                "count": 10,
-                "sprite_path": "ingame_ui/potion.png"
-            },
-            {
-                "name": "Super Potion",
-                "count": 10,
-                "sprite_path": "ingame_ui/potion.png"
-            },
-            {
-                "name": "Pokeball",
-                "count": 20,
-                "sprite_path": "ingame_ui/ball.png"
-            },
-            {
-                "name": "Coins",
-                "count": 500,
-                "sprite_path": "ingame_ui/coin.png"
-            }
-        ]
+    {
+      "path": "water_map.tmx",
+      "teleport": [
+        {
+          "x": 41,
+          "y": 29,
+          "destination": {
+            "path": "water_gym.tmx",
+            "x": 13,
+            "y": 48
+          }
+        },
+        {
+          "x": 22,
+          "y": 17,
+          "destination": {
+            "path": "hospital.tmx",
+            "x": 10,
+            "y": 15
+          }
+        },
+        {
+          "x": 23,
+          "y": 17,
+          "destination": {
+            "path": "hospital.tmx",
+            "x": 10,
+            "y": 15
+          }
+        }
+      ],
+      "player": {
+        "x": 0,
+        "y": 19
+      },
+      "enemy_trainers": [],
+      "shops": []
+    },
+    {
+      "path": "water_gym.tmx",
+      "teleport": [
+        {
+          "x": 11,
+          "y": 50,
+          "destination": {
+            "path": "water_map.tmx",
+            "x": 41,
+            "y": 30
+          }
+        },
+        {
+          "x": 12,
+          "y": 50,
+          "destination": {
+            "path": "water_map.tmx",
+            "x": 41,
+            "y": 30
+          }
+        },
+        {
+          "x": 13,
+          "y": 50,
+          "destination": {
+            "path": "water_map.tmx",
+            "x": 41,
+            "y": 30
+          }
+        },
+        {
+          "x": 14,
+          "y": 50,
+          "destination": {
+            "path": "water_map.tmx",
+            "x": 41,
+            "y": 30
+          }
+        },
+        {
+          "x": 15,
+          "y": 50,
+          "destination": {
+            "path": "water_map.tmx",
+            "x": 41,
+            "y": 30
+          }
+        }
+      ],
+      "player": {
+        "x": 13,
+        "y": 48
+      },
+      "enemy_trainers": [
+        {
+          "x": 3.0,
+          "y": 49.0,
+          "classification": "stationary",
+          "facing": "LEFT",
+          "max_tiles": 2,
+          "monsters": {
+            "name": "Blastoise",
+            "max_hp": 250,
+            "level": 40,
+            "sprite_path": "menu_sprites/blastoise.png",
+            "attack": 45,
+            "defense": 50,
+            "hp": 250,
+            "element": "Water",
+            "moves": [
+              {
+                "name": "Hydro Pump",
+                "type": "Water",
+                "power": 110,
+                "accuracy": 80,
+                "pp": 5,
+                "max_pp": 5,
+                "category": "special"
+              },
+              {
+                "name": "Ice Beam",
+                "type": "Ice",
+                "power": 90,
+                "accuracy": 100,
+                "pp": 10,
+                "max_pp": 10,
+                "category": "special"
+              },
+              {
+                "name": "Skull Bash",
+                "type": "Normal",
+                "power": 130,
+                "accuracy": 100,
+                "pp": 10,
+                "max_pp": 10,
+                "category": "physical"
+              }
+            ]
+          },
+          "is_corrupted": true,
+          "is_gym_leader": false
+        },
+        {
+          "x": 1.0,
+          "y": 4.0,
+          "classification": "stationary",
+          "facing": "RIGHT",
+          "max_tiles": 0,
+          "monsters": {
+            "name": "Starmie",
+            "max_hp": 200,
+            "level": 42,
+            "sprite_path": "menu_sprites/starmie.png",
+            "attack": 40,
+            "defense": 45,
+            "hp": 200,
+            "element": "Water",
+            "moves": [
+              {
+                "name": "Hydro Pump",
+                "type": "Water",
+                "power": 110,
+                "accuracy": 80,
+                "pp": 5,
+                "max_pp": 5,
+                "category": "special"
+              },
+              {
+                "name": "Psychic",
+                "type": "Psychic",
+                "power": 90,
+                "accuracy": 100,
+                "pp": 10,
+                "max_pp": 10,
+                "category": "special"
+              },
+              {
+                "name": "Ice Beam",
+                "type": "Ice",
+                "power": 90,
+                "accuracy": 100,
+                "pp": 10,
+                "max_pp": 10,
+                "category": "special"
+              },
+              {
+                "name": "Recover",
+                "type": "Normal",
+                "power": 0,
+                "accuracy": 100,
+                "pp": 10,
+                "max_pp": 10,
+                "category": "status"
+              }
+            ]
+          },
+          "is_corrupted": false,
+          "is_gym_leader": true
+        }
+      ],
+      "shops": []
+    },
+    {
+      "path": "hospital.tmx",
+      "teleport": [
+        {
+          "x": 9,
+          "y": 16,
+          "destination": {
+            "path": "water_map.tmx",
+            "x": 22,
+            "y": 18
+          }
+        },
+        {
+          "x": 10,
+          "y": 16,
+          "destination": {
+            "path": "water_map.tmx",
+            "x": 23,
+            "y": 18
+          }
+        },
+        {
+          "x": 10,
+          "y": 16,
+          "destination": {
+            "path": "water_map.tmx",
+            "x": 40,
+            "y": 20
+          }
+        },
+        {
+          "x": 11,
+          "y": 16,
+          "destination": {
+            "path": "water_map.tmx",
+            "x": 40,
+            "y": 20
+          }
+        }
+      ],
+      "player": {
+        "x": 10,
+        "y": 15
+      },
+      "enemy_trainers": [],
+      "shops": []
     }
+  ],
+  "current_map": "map.tmx",
+  "player": {
+    "x": 10.946277636186792,
+    "y": 28.616832611206856
+  },
+  "bag": {
+    "monsters": [
+      {
+        "name": "Blastoise",
+        "max_hp": 300,
+        "level": 50,
+        "sprite_path": "menu_sprites/blastoise.png",
+        "attack": 20,
+        "defense": 50,
+        "hp": 15,
+        "element": "Water",
+        "moves": [
+          {
+            "name": "Hydro Pump",
+            "type": "Water",
+            "power": 110,
+            "accuracy": 80,
+            "pp": 5,
+            "max_pp": 5,
+            "category": "special"
+          },
+          {
+            "name": "Surf",
+            "type": "Water",
+            "power": 90,
+            "accuracy": 100,
+            "pp": 15,
+            "max_pp": 15,
+            "category": "special"
+          },
+          {
+            "name": "Ice Beam",
+            "type": "Ice",
+            "power": 90,
+            "accuracy": 100,
+            "pp": 10,
+            "max_pp": 10,
+            "category": "special"
+          },
+          {
+            "name": "Skull Bash",
+            "type": "Normal",
+            "power": 130,
+            "accuracy": 100,
+            "pp": 10,
+            "max_pp": 10,
+            "category": "physical"
+          }
+        ]
+      }
+    ],
+    "items": [
+      {
+        "name": "Potion",
+        "count": 10,
+        "sprite_path": "ingame_ui/potion.png"
+      },
+      {
+        "name": "Super Potion",
+        "count": 10,
+        "sprite_path": "ingame_ui/potion.png"
+      },
+      {
+        "name": "Pokeball",
+        "count": 20,
+        "sprite_path": "ingame_ui/ball.png"
+      },
+      {
+        "name": "Coins",
+        "count": 500,
+        "sprite_path": "ingame_ui/coin.png"
+      }
+    ]
+  },
+  "pc_storage": {
+    "stored_pokemon": []
+  }
 }

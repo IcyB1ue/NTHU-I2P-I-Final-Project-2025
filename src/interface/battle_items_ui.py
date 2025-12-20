@@ -156,6 +156,21 @@ class BattleItemsUI:
             
             self.close()
     
+    def _calculate_panel_geometry(self):
+        """Calculate dynamic panel height and position based on item count."""
+        num_items = len(self.usable_items)
+        if num_items == 0:
+            visible_items_count = 1  # Space for "no items" message
+        else:
+            visible_items_count = min(num_items, self.max_visible_items)
+        
+        # Dynamic height: title (60) + items + message area (50)
+        dynamic_height = 60 + visible_items_count * self.item_height + 50
+        panel_height = max(200, dynamic_height)  # Minimum height
+        panel_y = (GameSettings.SCREEN_HEIGHT - panel_height) // 2
+        
+        return panel_height, panel_y
+    
     def update(self, dt: float):
         """Update the UI."""
         if not self.overlay_show:
@@ -168,6 +183,9 @@ class BattleItemsUI:
         
         mouse_pos = pg.mouse.get_pos()
         
+        # Calculate dynamic panel position (same as in draw)
+        panel_height, panel_y = self._calculate_panel_geometry()
+        
         # Only allow scrolling when more than 4 items
         if len(self.usable_items) > self.max_visible_items:
             keys = pg.key.get_pressed()
@@ -179,12 +197,12 @@ class BattleItemsUI:
         
         # Handle clicks
         if input_manager.mouse_pressed(1):
-            close_btn_rect = pg.Rect(self.panel_x + self.panel_width - 40, self.panel_y + 10, 30, 30)
+            close_btn_rect = pg.Rect(self.panel_x + self.panel_width - 40, panel_y + 10, 30, 30)
             if close_btn_rect.collidepoint(mouse_pos):
                 self.close()
                 return
             
-            items_start_y = self.panel_y + 60
+            items_start_y = panel_y + 60
             visible_count = min(len(self.usable_items), self.max_visible_items)
             for i, item in enumerate(self.usable_items[self.scroll_offset:self.scroll_offset + visible_count]):
                 item_rect = pg.Rect(
@@ -221,18 +239,8 @@ class BattleItemsUI:
         
         screen.blit(self.darken, (0, 0))
         
-        # Calculate dynamic panel height based on item count
-        num_items = len(self.usable_items)
-        if num_items == 0:
-            visible_items_count = 1  # Space for "no items" message
-        else:
-            visible_items_count = min(num_items, self.max_visible_items)
-        
-        # Dynamic height: title (60) + items + message area (50)
-        dynamic_height = 60 + visible_items_count * self.item_height + 50
-        panel_height = max(200, dynamic_height)  # Minimum height
-        
-        panel_y = (GameSettings.SCREEN_HEIGHT - panel_height) // 2
+        # Calculate dynamic panel height and position
+        panel_height, panel_y = self._calculate_panel_geometry()
         
         panel_rect = pg.Rect(self.panel_x, panel_y, self.panel_width, panel_height)
         
