@@ -208,7 +208,7 @@ class MenuScene(Scene):
     
     def __init__(self):
         super().__init__()
-        self.background = BackgroundSprite("backgrounds/background1.png")
+        self.background = BackgroundSprite("backgrounds/menu_background.png")
 
         px, py = GameSettings.SCREEN_WIDTH // 2, GameSettings.SCREEN_HEIGHT * 3 // 4
         self.play_button = Button(

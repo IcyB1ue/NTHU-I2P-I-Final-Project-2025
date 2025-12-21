@@ -23,6 +23,11 @@ class QuestUI:
         # Box padding
         self.padding_x = 20
         self.padding_y = 10
+        
+        # Notification System
+        self.notification_text = ""
+        self.notification_timer = 0.0
+        self.notification_alpha = 0
     
     def set_quest(self, text: str, alpha: int = 255):
         """Set the current quest text and alpha."""
@@ -34,6 +39,27 @@ class QuestUI:
         """Hide the quest UI."""
         self.is_visible = False
         self.alpha = 0
+
+    def show_notification(self, text: str, duration: float = 3.0):
+        """Show a temporary notification."""
+        self.notification_text = text
+        self.notification_timer = duration
+        self.notification_alpha = 255
+        
+    def update(self, dt: float):
+        """Update notification timer."""
+        if self.notification_timer > 0:
+            self.notification_timer -= dt
+            if self.notification_timer <= 0:
+                self.notification_timer = 0
+            
+            # Fade out in last second
+            if self.notification_timer < 1.0:
+                self.notification_alpha = int(255 * self.notification_timer)
+            else:
+                self.notification_alpha = 255
+        else:
+            self.notification_alpha = 0
     
     def draw(self, screen: pg.Surface):
         """Draw the quest UI."""
@@ -61,3 +87,20 @@ class QuestUI:
         # Draw text with alpha
         text_surface.set_alpha(self.alpha)
         screen.blit(text_surface, text_rect)
+        
+        # Draw Notification (below quest)
+        if self.notification_timer > 0 and self.notification_text:
+            n_font = self.font
+            n_text = n_font.render(self.notification_text, True, (255, 255, 100))
+            n_rect = n_text.get_rect(center=(self.x, self.y + 60))
+            
+            # Bg
+            n_bg_rect = n_rect.inflate(20, 10)
+            n_bg_surf = pg.Surface((n_bg_rect.width, n_bg_rect.height), pg.SRCALPHA)
+            n_bg_surf.fill((0, 0, 0, int(150 * (self.notification_alpha / 255))))
+            pg.draw.rect(n_bg_surf, (200, 200, 100, self.notification_alpha), (0, 0, n_bg_rect.width, n_bg_rect.height), 2, border_radius=8)
+            
+            screen.blit(n_bg_surf, n_bg_rect)
+            
+            n_text.set_alpha(self.notification_alpha)
+            screen.blit(n_text, n_rect)

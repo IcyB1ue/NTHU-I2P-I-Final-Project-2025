@@ -5,6 +5,7 @@ import math
 from src.scenes.scene import Scene
 from src.core import GameManager, OnlineManager
 from src.utils import Logger, PositionCamera, GameSettings, Position
+from src.core.managers.time_event_manager import TimeEventManager, TimeEvent
 from src.core.services import sound_manager, input_manager, scene_manager
 from src.sprites import Sprite, Text, Animation
 from typing import override, Any
@@ -15,6 +16,7 @@ from src.interface.shop_ui import ShopUI
 from src.interface.navigation_ui import NavigationUI
 from src.interface.components.chat_overlay import ChatOverlay
 from src.entities.enemy_trainer import EnemyTrainer
+from src.entities.shopkeeper import ShopEntity, ShopItem
 from src.maps.map import Minimap
 
 from src.core.managers.tutorial_manager import TutorialManager, TutorialQuest
@@ -184,6 +186,7 @@ class GameScene(Scene):
         
         # Night/Gengar system
         self.gengars: list[GhostGengar] = []
+        self.midnight_merchant: ShopEntity | None = None
         self.is_night = False
         self.night_overlay_alpha = 0
         self.day_overlay_color = (0, 0, 0)  # Current overlay RGB
@@ -192,6 +195,11 @@ class GameScene(Scene):
         self.day_night_cycle_enabled = False
         self.time_of_day = 8.0  # Start at 8 AM (0-24 hours)
         self.day_cycle_speed = 0.1  # Hours per real second (0.1 = 1 game hour per 10 real seconds)
+        
+        # Initialize Time Event Manager
+        self.time_event_manager = TimeEventManager(self)
+        self._init_time_events()
+
         
         # Day phase constants
         # DAWN: 5:00 - 7:00 (orange/pink tint)
@@ -435,6 +443,10 @@ class GameScene(Scene):
         self.time_of_day += self.day_cycle_speed * dt
         if self.time_of_day >= 24.0:
             self.time_of_day -= 24.0
+            
+        # Update Time Events
+        self.time_event_manager.update(self.time_of_day, dt)
+
         
         # Calculate smooth overlay based on time using sine-like curve
         # Peak darkness at midnight (0:00), peak brightness at noon (12:00)
@@ -1798,6 +1810,7 @@ class GameScene(Scene):
         
         # Update evolution UI
         self.evolution_ui.update(dt)
+        self.quest_ui.update(dt)
         
         # Block other updates while evolution is playing
         if self.evolution_ui.overlay_show:
@@ -2237,6 +2250,207 @@ class GameScene(Scene):
 
         # 14. Draw professor dialog (always on top of everything)
         self.professor_dialog.draw(screen)
+
+    def _find_valid_spawn_point(self, max_attempts=50) -> Position | None:
+        """Find a random valid spawn point on the current map."""
+        if not self.game_manager.current_map:
+            return None
+            
+        width = self.game_manager.current_map.width
+        height = self.game_manager.current_map.height
+        
+        for _ in range(max_attempts):
+            x = random.randint(5, width - 6)  # Avoid edges
+            y = random.randint(5, height - 6)
+            
+            # Create a rect for tile checking
+            rect = pg.Rect(x * GameSettings.TILE_SIZE + 4, y * GameSettings.TILE_SIZE + 4, 
+                          GameSettings.TILE_SIZE - 8, GameSettings.TILE_SIZE - 8)
+            
+            if not self.game_manager.current_map.check_collision(rect) and \
+               not self.game_manager.current_map.check_water_collision(rect):
+                   return Position(x * GameSettings.TILE_SIZE, y * GameSettings.TILE_SIZE)
+        return None
+
+    def _spawn_midnight_merchant(self):
+        """Spawn the Midnight Merchant at a random location."""
+        # Only spawn if not already active and on main map
+        if self.midnight_merchant or self.current_map_path != "map.tmx":
+            return
+            
+        pos = self._find_valid_spawn_point()
+        if not pos:
+            Logger.warning("Could not find spawn point for Midnight Merchant")
+            return
+            
+        # Create inventory
+        inventory = [
+            ShopItem("Master Ball", 5000, "ingame_ui/ball_master.png", "Catches any Pokemon without fail.", stock=1),
+            ShopItem("Rare Candy", 2500, "ingame_ui/candy_rare.png", "Instantly raises a Pokemon's level.", stock=5),
+            ShopItem("Full Restore", 1500, "ingame_ui/potion_full.png", "Fully restores HP and status.", stock=10),
+            ShopItem("Max Revive", 2000, "ingame_ui/revive_max.png", "Revives and fully heals a Pokemon.", stock=3)
+        ]
+        
+        self.midnight_merchant = ShopEntity(
+            pos.x, pos.y, 
+            self.game_manager, 
+            name="Midnight Merchant",
+            inventory=inventory,
+            sprite_path="character/ow9.png" # Mysterious figure
+        )
+        
+        # Robust addition to shop list
+        current_key = self.game_manager.current_map_key
+        if current_key not in self.game_manager.shops:
+            self.game_manager.shops[current_key] = []
+        self.game_manager.shops[current_key].append(self.midnight_merchant)
+        
+        Logger.info(f"Midnight Merchant spawned at {pos.x}, {pos.y}")
+        
+    def _despawn_midnight_merchant(self):
+        """Despawn the Midnight Merchant."""
+        if self.midnight_merchant:
+            if self.midnight_merchant in self.game_manager.current_shops:
+                self.game_manager.current_shops.remove(self.midnight_merchant)
+            self.midnight_merchant = None
+            Logger.info("Midnight Merchant despawned")
+
+    def _init_time_events(self):
+        """Initialize all day/night cycle events."""
+        
+        # 1. Midnight Merchant (00:00 - 04:00)
+        def start_merchant():
+            sound_manager.play_sound("RBY 117 Obtained an Item!.ogg")
+            self._spawn_midnight_merchant()
+            self._show_professor_dialogue(["The Midnight Merchant has appeared!", "Look for him on the map!"])
+            
+        self.time_event_manager.add_event(TimeEvent(
+            "MidnightMerchant", 0, 4, 0.3,
+            on_start=start_merchant,
+            on_end=self._despawn_midnight_merchant,
+            description="The Midnight Merchant is open!"
+        ))
+        
+        # 2. Morning Blessing (06:00 - 07:00)
+        def morning_heal():
+            if self.game_manager.bag.monsters:
+                for m in self.game_manager.bag.monsters:
+                    m["hp"] = m["max_hp"]
+                sound_manager.play_sound("RBY 114 Pokemon Recovery.ogg")
+                Logger.info("Morning Healing Applied")
+        
+        self.time_event_manager.add_event(TimeEvent(
+            "MorningBlessing", 6, 7, 0.5,
+            on_start=morning_heal,
+            description="The morning sun energizes your Pokemon! (Full Heal)"
+        ))
+        
+        # 3. Dusk Swarm (18:00 - 20:00)
+        def start_dusk_swarm():
+            if not self.game_manager.bag.has_item("Gengar Repeller"):
+                self.gengars.clear() 
+                self._spawn_gengars()
+                
+        self.time_event_manager.add_event(TimeEvent(
+            "DuskSwarm", 18, 20, 0.4,
+            on_start=start_dusk_swarm,
+            description="The shadows are lengthening... (High Danger)"
+        ))
+        
+        # 4. Golden Hour (12:00 - 13:00)
+        self.time_event_manager.add_event(TimeEvent(
+            "GoldenHour", 12, 13, 0.2,
+            on_start=lambda: None,
+            description="It's Golden Hour! (Double Coins from battles)"
+        ))
+        
+        # 5. Mysterious Gift (03:00 - 04:00)
+        def give_gift():
+            items = ["Potion", "Pokeball", "Super Potion", "Great Ball"]
+            item = random.choice(items)
+            self.game_manager.bag.add_item(item, 1)
+            self._show_professor_dialogue([f"You found a {item} dropped by a mysterious stranger!"])
+            
+        self.time_event_manager.add_event(TimeEvent(
+            "MysteriousGift", 3, 4, 0.1,
+            on_start=give_gift,
+            description="You hear a strange noise..."
+        ))
+        
+        # 6. Rainy Afternoon (14:00 - 16:00)
+        def start_rain():
+            self.day_overlay_color = (0, 0, 50)
+            self.night_overlay_alpha = 50
+            
+        self.time_event_manager.add_event(TimeEvent(
+            "RainyAfternoon", 14, 16, 0.3,
+            on_start=start_rain,
+            on_end=lambda: setattr(self, 'night_overlay_alpha', 0),
+            description="It started raining heavily!"
+        ))
+        
+        # 7. Starfall (22:00 - 23:00)
+        def starfall_event():
+            sound_manager.play_sound("RBY 117 Obtained an Item!.ogg")
+            self.game_manager.bag.add_item("Nugget", 1)
+            
+        self.time_event_manager.add_event(TimeEvent(
+            "Starfall", 22, 23, 0.2,
+            on_start=starfall_event,
+            description="A shooting star fell nearby! You found a Nugget!"
+        ))
+        
+        # 8. Training Montage (08:00 - 10:00)
+        self.time_event_manager.add_event(TimeEvent(
+            "TrainingMontage", 8, 10, 0.3,
+            on_start=lambda: None,
+            description="You feel pumped! (XP Gain increased)"
+        ))
+        
+        # 9. Ghostly Whisper (01:00 - 02:00)
+        self.time_event_manager.add_event(TimeEvent(
+            "GhostlyWhisper", 1, 2, 0.1,
+            on_start=lambda: sound_manager.play_sound("RBY 131 Trainers_ Eyes Meet (Bad Guy).ogg"),
+            description="You hear a chilling whisper: 'Get out...'"
+        ))
+        
+        # 10. Market Day (10:00 - 12:00)
+        def start_market():
+            if hasattr(self.shop_ui, 'discount_active'):
+                self.shop_ui.discount_active = True
+                
+        def end_market():
+            if hasattr(self.shop_ui, 'discount_active'):
+                self.shop_ui.discount_active = False
+                
+        self.time_event_manager.add_event(TimeEvent(
+            "MarketDay", 10, 12, 0.4,
+            on_start=start_market,
+            on_end=end_market,
+            description="Market Day! 20% Discount at all shops!"
+        ))
+        
+        # 11. Lucky Find (17:00 - 18:00)
+        self.time_event_manager.add_event(TimeEvent(
+            "LuckyFind", 17, 18, 0.05,
+            on_start=lambda: self.game_manager.bag.add_item("Nugget", 1),
+            description="You tripped over a growing Nugget!"
+        ))
+        
+        # 12. Professor's Broadcast (09:00 - 10:00)
+        tips = [
+            "Tip: Water beats Fire, but is weak to Electric!",
+            "Tip: You can rest at home to heal your Pokemon.",
+            "Tip: Press M to view the map.",
+            "Tip: Catching Pokemon gives you EXP too!",
+            "Tip: Rare Pokemon appear more often in tall grass."
+        ]
+        self.time_event_manager.add_event(TimeEvent(
+            "ProfBroadcast", 9, 10, 0.5,
+            on_start=lambda: self._show_professor_dialogue(["[Broadcast] " + random.choice(tips)]),
+            description="Incoming transmission from Professor Oak..."
+        ))
+
 
 
 class Settings:

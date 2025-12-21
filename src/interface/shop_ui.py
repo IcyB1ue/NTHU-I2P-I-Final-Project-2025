@@ -46,6 +46,9 @@ class ShopUI:
         self.message = ""
         self.message_timer = 0.0
         self.message_success = True
+        
+        # Discount system (Market Day event)
+        self.discount_active = False
     
     def open(self, shop, bag):
         """Open the shop UI."""
@@ -80,6 +83,11 @@ class ShopUI:
         
         item_name = self._get_item_attr(item, "name", "Unknown")
         price = self._get_item_attr(item, "price", 0)
+        
+        # Apply discount
+        if self.discount_active:
+            price = int(price * 0.8)
+            
         sprite_path = self._get_item_attr(item, "sprite_path", "")
         
         # Check if player has enough coins
@@ -331,8 +339,30 @@ class ShopUI:
                 
                 # Price
                 price = self._get_item_attr(item, "price", 0)
+                original_price = price
+                
+                if self.discount_active:
+                    price = int(price * 0.8)
+                
                 can_afford = coins >= price
                 price_color = (255, 215, 0) if can_afford else (200, 100, 100)
+                
+                if self.discount_active:
+                    # Draw original price crossed out or small
+                    orig_text = self.desc_font.render(f"{original_price}", True, (150, 150, 150))
+                    screen.blit(orig_text, (item_rect.right - 200, item_rect.y + 22))
+                    # Draw line through
+                    pg.draw.line(screen, (150, 150, 150), 
+                                (item_rect.right - 200, item_rect.y + 28),
+                                (item_rect.right - 200 + orig_text.get_width(), item_rect.y + 28), 1)
+                                
+                    # Draw SALE badge
+                    sale_rect = pg.Rect(item_rect.right - 245, item_rect.y + 10, 40, 20)
+                    pg.draw.rect(screen, (200, 50, 50), sale_rect, border_radius=5)
+                    sale_text = self.desc_font.render("SALE", True, (255, 255, 255))
+                    screen.blit(sale_text, (sale_rect.centerx - sale_text.get_width()//2, 
+                                           sale_rect.centery - sale_text.get_height()//2))
+
                 price_text = self.price_font.render(f"{price}", True, price_color)
                 screen.blit(price_text, (item_rect.right - 160, item_rect.y + 20))
                 
