@@ -769,22 +769,17 @@ class GameScene(Scene):
             self.water_transition_blackout = max(0, self.water_transition_blackout - 200 * dt)
     
     def _teleport_to_water_world(self):
-        """Teleport player to Water World map."""
-        # Check if water_map.tmx exists in the maps
+        """Teleport to Water World briefly, show 'To.. Be.. Continued..' and return to menu."""
+        Logger.info("Water World portal activated - teleporting briefly then showing ending")
+        
+        # Actually teleport to water world first
         if "water_map.tmx" in self.game_manager.maps:
-            # Use the game's map switching system
             self.game_manager.switch_map("water_map.tmx")
             
             # Set player position in water world (2, 21)
-            self.game_manager.player.position.x = 2 * GameSettings.TILE_SIZE
-            self.game_manager.player.position.y = 21 * GameSettings.TILE_SIZE
-            
-            # Track spawn position for walk-away detection
-            self.water_world_spawn_pos = Position(
-                self.game_manager.player.position.x,
-                self.game_manager.player.position.y
-            )
-            self.water_world_walk_triggered = False
+            if self.game_manager.player:
+                self.game_manager.player.position.x = 2 * GameSettings.TILE_SIZE
+                self.game_manager.player.position.y = 21 * GameSettings.TILE_SIZE
             
             # Force immediate map switch
             self.game_manager.try_switch_map()
@@ -792,27 +787,17 @@ class GameScene(Scene):
             self._handle_map_change()
             
             Logger.info("Teleported to Water World!")
-            
-            # Update quest to ENTER_WATER_WORLD
-            self.tutorial_manager.on_entered_water_world()
-            
-            # Show arrival message
-            self._show_professor_dialogue([
-                "Incredible! The portal actually worked!",
-                "This must be the Water World - a realm connected by ancient magic!",
-                "I sense powerful Water-type Pokemon dwelling in this mysterious place.",
-                "Explore carefully and see what secrets this world holds!"
-            ])
-        else:
-            # Water world map doesn't exist yet - show message
-            Logger.warning("water_map.tmx not found in game maps!")
-            self._show_professor_dialogue([
-                "The portal energy is unstable...",
-                "It seems the connection to the other world isn't ready yet.",
-                "Come back later once the portal stabilizes!"
-            ])
-            # Reset transition state
-            self.water_transition_blackout = 0
+        
+        # Trigger the ending sequence (starts with brief view, then fade to black)
+        self.ending_sequence_active = True
+        self.ending_phase = 1  # Start from phase 1 (brief view of water world)
+        self.ending_blackout_alpha = 0
+        self.ending_timer = 0.0  # Timer for showing text before returning to menu
+        
+        # Reset the water transition state
+        self.water_transition_blackout = 0
+        self.water_transition_active = False
+        self.water_transition_teleporting = False
     
     def _teleport_to_main_world(self):
         """Teleport player back to main map from Water World."""
@@ -1330,18 +1315,14 @@ class GameScene(Scene):
             return
         
         if self.ending_phase == 1:
-            # Teleport player to (47, 37) on main map
-            if self.current_map_path != "map.tmx":
-                self.game_manager.switch_map("map.tmx")
-                self.game_manager.try_switch_map()
-                self.current_map_path = "map.tmx"
-            
-            if self.game_manager.player:
-                self.game_manager.player.position.x = 47 * GameSettings.TILE_SIZE
-                self.game_manager.player.position.y = 37 * GameSettings.TILE_SIZE
-            
-            self.ending_phase = 2
-            Logger.info("Ending: Teleported to (47, 37)")
+            # Phase 1: Brief view of water world (1 second)
+            if not hasattr(self, 'ending_timer'):
+                self.ending_timer = 0.0
+            self.ending_timer += dt
+            if self.ending_timer >= 1.0:
+                self.ending_phase = 2
+                self.ending_timer = 0.0
+                Logger.info("Ending: Brief view complete, starting fade")
         
         elif self.ending_phase == 2:
             # Fade to black
@@ -1349,11 +1330,25 @@ class GameScene(Scene):
             if self.ending_blackout_alpha >= 255:
                 self.ending_blackout_alpha = 255
                 self.ending_phase = 3
+                self.ending_timer = 0.0
                 Logger.info("Ending: Faded to black")
         
         elif self.ending_phase == 3:
-            # Show "To Be Continued..." - stays here
+            # Show "To.. Be.. Continued.." for 3 seconds, then go to menu
             self.ending_text_shown = True
+            if not hasattr(self, 'ending_timer'):
+                self.ending_timer = 0.0
+            self.ending_timer += dt
+            if self.ending_timer >= 3.0:
+                self.ending_phase = 4
+                Logger.info("Ending: Text shown, returning to menu")
+        
+        elif self.ending_phase == 4:
+            # Return to menu scene
+            self.ending_sequence_active = False
+            self.ending_text_shown = False
+            scene_manager.change_scene("menu")
+            Logger.info("Ending: Returned to MenuScene")
     
     def _draw_ending(self, screen: pg.Surface):
         """Draw the ending sequence."""

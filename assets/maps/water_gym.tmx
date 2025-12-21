@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="27" height="52" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="1">
  <tileset firstgid="1" source="tileset.tsx"/>
- <tileset firstgid="1301" source="../../../../../Downloads/Top-Down_Retro_Interior/Cozy Interior 4.tsx"/>
+ <tileset firstgid="1301" source="Cozy Interior 4.tsx"/>
  <tileset firstgid="1535" source="Cozy Interior 2.tsx"/>
- <tileset firstgid="1697" source="../../../../../Downloads/Top-Down_Retro_Interior/Cozy Interior 2.tsx"/>
+ <tileset firstgid="1697" source="Cozy Interior 2.tsx"/>
  <tileset firstgid="1859" source="Cozy Interior 4.tsx"/>
  <layer id="9" name="Tile Layer 2" width="27" height="52">
   <data encoding="csv">

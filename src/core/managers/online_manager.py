@@ -157,9 +157,12 @@ class OnlineManager:
     
     def tick(self, dt: float):
         """Call this every frame to update movement."""
+        # Copy player list to avoid holding lock during interpolation
         with self._lock:
-            for player in self._remote_players.values():
-                player.interpolate(dt)
+            players = list(self._remote_players.values())
+        
+        for player in players:
+            player.interpolate(dt)
         
     def get_list_players(self) -> list[dict]:
         with self._lock:
@@ -244,12 +247,12 @@ class OnlineManager:
     def _player_loop(self) -> None:
         while not self._stop_event.is_set():
             self._fetch_players()
-            time.sleep(0.05)
+            time.sleep(0.15)  # ~7 requests/second (was 0.05 = 20/s)
 
     def _send_loop(self) -> None:
         while not self._stop_event.is_set():
             self._send_pending_update()
-            time.sleep(0.05)
+            time.sleep(0.15)  # ~7 requests/second (was 0.05 = 20/s)
 
     def _chat_loop(self) -> None:
         while not self._stop_event.is_set():
@@ -269,8 +272,10 @@ class OnlineManager:
             if resp.status_code == 404:
                 Logger.warning("Player not found on server, re-registering...")
                 self.register()
-        except Exception:
-            pass
+        except requests.exceptions.Timeout:
+            pass  # Timeouts are expected, don't log
+        except Exception as e:
+            Logger.debug(f"Send update error: {e}")
             
     def _fetch_players(self) -> None:
         if self.player_id == -1:
@@ -302,8 +307,10 @@ class OnlineManager:
                 for p in to_remove:
                     del self._remote_players[p]
                     
-        except Exception:
-            pass
+        except requests.exceptions.Timeout:
+            pass  # Timeouts are expected, don't log
+        except Exception as e:
+            Logger.debug(f"Fetch players error: {e}")
 
     def _fetch_chat(self) -> None:
         if self.player_id == -1:
@@ -316,5 +323,7 @@ class OnlineManager:
             messages = resp.json().get("messages", [])
             with self._chat_lock:
                 self._chat_messages = messages
-        except Exception:
-            pass
+        except requests.exceptions.Timeout:
+            pass  # Timeouts are expected, don't log
+        except Exception as e:
+            Logger.debug(f"Fetch chat error: {e}")
